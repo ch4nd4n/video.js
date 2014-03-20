@@ -89,6 +89,10 @@ vjs.SeekBar.prototype.onMouseDown = function(event){
 
 vjs.SeekBar.prototype.onMouseMove = function(event){
   var newTime = this.calculateDistance(event) * this.player_.duration();
+  var range = this.player_.options().range;
+  if(range) {
+    newTime = range.startTime + this.calculateDistance(event) * (range.endTime - range.startTime );
+  }
 
   // Don't let video end while scrubbing.
   if (newTime == this.player_.duration()) { newTime = newTime - 0.1; }
