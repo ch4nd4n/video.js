@@ -180,6 +180,12 @@ module.exports = function(grunt) {
       commit:  true,
       message: 'Release %version%',
       prefix:  'v'
+    },
+    uglify: {
+      build: {
+        src: 'build/files/combined.video.js',
+        dest: 'dist/video.min.js'
+      }
     }
   });
 
@@ -190,6 +196,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-s3');
   grunt.loadNpmTasks('contribflow');
   grunt.loadNpmTasks('grunt-karma');
@@ -208,6 +215,8 @@ module.exports = function(grunt) {
   // Development watch task
   grunt.registerTask('dev', ['jshint', 'less', 'build', 'qunit:source']);
   grunt.registerTask('test', ['jshint', 'less', 'build', 'minify', 'usebanner', 'qunit']);
+
+  grunt.registerTask('minugly', ['build','uglify']);
 
   var fs = require('fs'),
       gzip = require('zlib').gzip;

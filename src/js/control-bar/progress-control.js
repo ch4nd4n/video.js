@@ -68,7 +68,14 @@ vjs.SeekBar.prototype.updateARIAAttributes = function(){
 };
 
 vjs.SeekBar.prototype.getPercent = function(){
-  return this.player_.currentTime() / this.player_.duration();
+  var range = this.player_.options().range, percent=null;
+  if(range) {
+    var start = range.startTime, end = range.endTime;
+    percent = (this.player_.currentTime() - start)/(end - start);
+  } else {
+    percent = this.player_.currentTime()/this.player_.duration();
+  }
+  return percent;
 };
 
 vjs.SeekBar.prototype.onMouseDown = function(event){
